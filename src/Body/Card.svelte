@@ -1,4 +1,5 @@
 <script>
+  import cart from "../cart/cart-store.js";
   export let id, title, description, image, price;
 
   let isModalOpen = false;
@@ -13,6 +14,15 @@
     } else {
       const html = document.getElementsByTagName("html")[0];
       html.classList.remove("is-clipped");
+    }
+  };
+
+  const addToCart = () => {
+    if ($cart.find(item => item.id === id) === undefined) {
+      cart.update(items => [
+        ...items,
+        { id, title, description, price, quantity: 1 }
+      ]);
     }
   };
 </script>
@@ -77,7 +87,7 @@
           <img src="images/eye.svg" alt="view" />
           View
         </button>
-        <button class="button is-small card-button">
+        <button class="button is-small card-button" on:click={addToCart}>
           <img src="images/upload.svg" alt="add to cart" />
           Add to Cart
         </button>
@@ -90,6 +100,7 @@
   <div class="modal-background" />
   <div class="modal-content">
     <div class="box">
+      <h4 class="title is-4">{title}</h4>
       <figure class="image is-1by1">
         <img src={image} alt={title} />
       </figure>
