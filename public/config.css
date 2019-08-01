@@ -1,0 +1,16 @@
+html,
+body {
+  background-color: #ede7ed;
+}
+
+.navbar-custom {
+  position: fixed;
+  width: 100%;
+  background: rgb(236, 210, 238);
+  background: linear-gradient(
+    0deg,
+    rgba(236, 210, 238, 1) 0%,
+    rgba(195, 134, 255, 1) 100%
+  );
+  padding: 5px 15px;
+}
