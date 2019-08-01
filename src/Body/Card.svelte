@@ -1,8 +1,10 @@
 <script>
   import cart from "../cart/cart-store.js";
+  import { fade, fly } from "svelte/transition";
   export let id, title, description, image, price;
 
   let isModalOpen = false;
+  let addedToCart = false;
 
   const toggleModal = () => {
     // opens modal
@@ -78,12 +80,24 @@
           <img src="images/eye.svg" alt="view" />
           View
         </button>
-        <button
-          class="button is-small card-button"
-          on:click={() => cart.addToCart({ id, title, description, price })}>
-          <img src="images/upload.svg" alt="add to cart" />
-          Add to Cart
-        </button>
+        {#if addedToCart}
+          <button
+            class="button is-small card-button"
+            transition:fly={{ delay: 150, duration: 300, y: -50 }}>
+            <img src="images/gift.svg" alt="add to cart" />
+            Added to Cart
+          </button>
+        {:else}
+          <button
+            class="button is-small card-button"
+            on:click={() => {
+              cart.addToCart({ id, title, description, price });
+              addedToCart = true;
+            }}>
+            <img src="images/upload.svg" alt="add to cart" />
+            Add to Cart
+          </button>
+        {/if}
       </div>
     </div>
   </div>
@@ -94,7 +108,7 @@
   <div class="modal-content">
     <div class="box">
       <h4 class="title is-4">{title}</h4>
-      <figure class="image is-1by1">
+      <figure class="image is-4by5">
         <img src={image} alt={title} />
       </figure>
     </div>

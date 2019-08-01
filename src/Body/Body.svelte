@@ -70,7 +70,7 @@
 <style>
   main {
     width: 100%;
-    padding: 9rem 0rem;
+    padding: 5rem 0rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -79,7 +79,6 @@
   h1 {
     text-align: center;
     font-family: "Lovers Quarrel", cursive;
-    font-size: 4rem;
   }
 
   .knitting-balls {
@@ -102,10 +101,26 @@
     padding: 0px 40px;
     margin: 2rem 0;
   }
+
+  @media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+    main {
+      padding: 2rem 0rem;
+    }
+
+    h1 {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  .items {
+    padding: 0px 20px;
+    margin: 2rem 0;
+  }
 </style>
 
 <main>
-  <h1>Mia's Knitting and Crochet Creations</h1>
+  <h1 class="subtitle is-1">Mia's Knitting and Crochet Creations</h1>
   <div class="knitting-balls">
     <img src="images/knitting-ball.png" alt="knitting-ball" />
     <img src="images/knitting-ball.png" alt="knitting-ball" />
@@ -115,9 +130,9 @@
   {#if loading}
     <div class="loading">
       <h3 class="title is-6">Loading...</h3>
-      <!--<img
-        src="https://media.giphy.com/media/3oriO6qJiXajN0TyDu/giphy.gif"
-        alt="loading knitting" />-->
+      <img
+        src="https://media.giphy.com/media/7beSjLq7J6qfS/giphy.gif"
+        alt="loading knitting" />
     </div>
   {:else}
     <div class="items" in:fly={{ y: 200, duration: 500 }}>
