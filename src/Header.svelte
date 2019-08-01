@@ -19,7 +19,7 @@
     }
   };
 
-  const updateQuantity = (value, id) => {
+  /*const updateQuantity = (value, id) => {
     if (value > 0 && value < 6) {
       cart.update(items =>
         items.map(item => {
@@ -31,7 +31,7 @@
         })
       );
     }
-  };
+  };*/
 </script>
 
 <style>
@@ -120,7 +120,7 @@
                 <div class="control">
                   <div class="select is-small">
                     <select
-                      on:change={event => updateQuantity(event.target.value, item.id)}>
+                      on:change={event => cart.updateQuantity(event.target.value, item.id)}>
                       <option value="1" selected={item.quantity === '1'}>
                         1
                       </option>
@@ -153,7 +153,7 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button is-success">Send Order</button>
-        <button class="button is-danger" on:click={() => cart.set([])}>
+        <button class="button is-danger" on:click={() => cart.empty()}>
           Empty Cart
         </button>
       </footer>

@@ -115,9 +115,9 @@
   {#if loading}
     <div class="loading">
       <h3 class="title is-6">Loading...</h3>
-      <img
+      <!--<img
         src="https://media.giphy.com/media/3oriO6qJiXajN0TyDu/giphy.gif"
-        alt="loading knitting" />
+        alt="loading knitting" />-->
     </div>
   {:else}
     <div class="items" in:fly={{ y: 200, duration: 500 }}>

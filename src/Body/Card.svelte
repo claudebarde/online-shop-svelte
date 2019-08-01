@@ -16,15 +16,6 @@
       html.classList.remove("is-clipped");
     }
   };
-
-  const addToCart = () => {
-    if ($cart.find(item => item.id === id) === undefined) {
-      cart.update(items => [
-        ...items,
-        { id, title, description, price, quantity: 1 }
-      ]);
-    }
-  };
 </script>
 
 <style>
@@ -87,7 +78,9 @@
           <img src="images/eye.svg" alt="view" />
           View
         </button>
-        <button class="button is-small card-button" on:click={addToCart}>
+        <button
+          class="button is-small card-button"
+          on:click={() => cart.addToCart({ id, title, description, price })}>
           <img src="images/upload.svg" alt="add to cart" />
           Add to Cart
         </button>
