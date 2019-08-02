@@ -2,6 +2,7 @@
   import cart from "./cart/cart-store.js";
   import { onDestroy } from "svelte";
   import { fade } from "svelte/transition";
+  import config from "../config.js";
 
   let buttonHover = false;
   let isModalOpen = false;
@@ -82,14 +83,14 @@
   role="navigation"
   aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item logo" href="https://bulma.io">
+    <a class="navbar-item logo" href="#">
       <img
-        src="images/yarn.svg"
+        src={config.logo}
         alt="logo"
         width="112"
         height="28"
         class="logoImg" />
-      Mia's Knitting
+      {config.headerTitle}
     </a>
   </div>
 

@@ -2,6 +2,7 @@
   import Card from "./Card.svelte";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
+  import config from "../../config.js";
 
   const cardGroups = [
     [
@@ -120,7 +121,7 @@
 </style>
 
 <main>
-  <h1 class="subtitle is-1">Mia's Knitting and Crochet Creations</h1>
+  <h1 class="subtitle is-1">{config.mainTitle}</h1>
   <div class="knitting-balls">
     <img src="images/knitting-ball.png" alt="knitting-ball" />
     <img src="images/knitting-ball.png" alt="knitting-ball" />

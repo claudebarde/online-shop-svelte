@@ -3,3 +3,11 @@ node_modules
 public/bundle.*
 
 .vscode
+
+# firebase files
+storage.rules
+firestore.rules
+firestore.indexes.json
+firebaseConfig.js
+firebase.json
+.firebaserc

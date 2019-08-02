@@ -4,7 +4,6 @@
   export let id, title, description, image, price;
 
   let isModalOpen = false;
-  let addedToCart = false;
 
   const toggleModal = () => {
     // opens modal
@@ -12,7 +11,7 @@
     if (isModalOpen === true) {
       // clips html and body
       const html = document.getElementsByTagName("html")[0];
-      html.setAttribute("class", "is-clipped");
+      html.classList.add("is-clipped");
     } else {
       const html = document.getElementsByTagName("html")[0];
       html.classList.remove("is-clipped");
@@ -80,7 +79,7 @@
           <img src="images/eye.svg" alt="view" />
           View
         </button>
-        {#if addedToCart}
+        {#if $cart.find(item => item.id === id) !== undefined}
           <button
             class="button is-small card-button"
             transition:fly={{ delay: 150, duration: 300, y: -50 }}>
@@ -90,10 +89,7 @@
         {:else}
           <button
             class="button is-small card-button"
-            on:click={() => {
-              cart.addToCart({ id, title, description, price });
-              addedToCart = true;
-            }}>
+            on:click={() => cart.addToCart({ id, title, description, price })}>
             <img src="images/upload.svg" alt="add to cart" />
             Add to Cart
           </button>
