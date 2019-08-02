@@ -50,30 +50,12 @@
     text-align: right;
   }
 
-  .mobile-cart {
-    display: none;
-  }
-
   @media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
     .logo {
       font-size: 2.5rem;
     }
     .logoImg {
       max-height: 2rem;
-    }
-
-    .mobile-cart {
-      display: block;
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      z-index: 100;
-      background-color: #c386ff !important;
-    }
-
-    .button-icon {
-      margin-right: 10px;
-      height: 14px;
     }
   }
 </style>
@@ -83,7 +65,7 @@
   role="navigation"
   aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item logo" href="#">
+    <a class="navbar-item logo" href="amiras-crafts.web.app">
       <img
         src={config.logo}
         alt="logo"
@@ -114,12 +96,6 @@
     </div>
   </div>
 </nav>
-<button
-  class="button is-link is-inverted is-outlined is-small mobile-cart"
-  on:click={toggleModal}>
-  <img src="images/shopping-cart-white.svg" alt="cart" class="button-icon" />
-  <span class:buttonHover>{$cart.length === 0 ? 'Cart' : $cart.length}</span>
-</button>
 
 {#if $cart.length > 0}
   <div class="modal" class:is-active={isModalOpen} transition:fade>
