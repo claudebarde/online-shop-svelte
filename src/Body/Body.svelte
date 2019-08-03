@@ -1,10 +1,11 @@
 <script>
   import Card from "./Card.svelte";
   import { onMount } from "svelte";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import config from "../../config.js";
   import { db } from "../../firebaseConfig.js";
   import cart from "../cart/cart-store.js";
+  import Cart from "../cart/Cart.svelte";
 
   const chunk = (array, size) => {
     const chunked_arr = [];
@@ -81,6 +82,7 @@
   .items {
     padding: 0px 40px;
     margin: 2rem 0;
+    border: none;
   }
 
   .mobile-cart {
@@ -92,8 +94,8 @@
   }
 
   @media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
-    main {
-      padding: 2rem 0rem;
+    .mobile-view {
+      padding: 2rem 1rem;
     }
 
     h1 {
@@ -127,16 +129,24 @@
   }
 </style>
 
-<main>
-  {#if mobileOpenCart}
-    Cart
+{#if mobileOpenCart}
+  <main class="mobile-view" transition:fade>
+    <Cart />
+    {#if $cart.length > 0}
+      <button class="button is-success is-small">Send Order</button>
+      <button class="button is-danger is-small" on:click={() => cart.empty()}>
+        Empty Cart
+      </button>
+    {/if}
     <button
       class="button is-link is-inverted is-outlined is-small mobile-cart"
       on:click={() => (mobileOpenCart = false)}>
       <img src="images/x-circle-white.svg" alt="cart" class="button-icon" />
       <span>Close</span>
     </button>
-  {:else}
+  </main>
+{:else}
+  <main in:fade={{ delay: 400 }} out:fade>
     <h1 class="subtitle is-1">{config.mainTitle}</h1>
     <div class="knitting-balls">
       <img src="images/knitting-ball.png" alt="knitting-ball" />
@@ -177,5 +187,5 @@
         <span>{$cart.length === 0 ? 'Cart' : $cart.length}</span>
       </button>
     {/if}
-  {/if}
-</main>
+  </main>
+{/if}

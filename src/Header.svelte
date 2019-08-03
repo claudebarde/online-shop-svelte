@@ -1,5 +1,6 @@
 <script>
   import cart from "./cart/cart-store.js";
+  import Cart from "./cart/Cart.svelte";
   import { onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import config from "../config.js";
@@ -44,10 +45,6 @@
 
   .logoImg {
     max-height: 3rem;
-  }
-
-  .total-column {
-    text-align: right;
   }
 
   @media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -106,46 +103,7 @@
         <button class="delete" aria-label="close" on:click={toggleModal} />
       </header>
       <section class="modal-card-body">
-        {#each $cart as item, index (item.id)}
-          <div class="columns">
-            <div class="column is-1">{index + 1}</div>
-            <div class="column is-3">{item.title}</div>
-            <div class="column is-4">{item.description}</div>
-            <div class="column is-2">
-              <div class="field">
-                <div class="control">
-                  <div class="select is-small">
-                    <select
-                      on:change={event => cart.updateQuantity(event.target.value, item.id)}>
-                      <option value="1" selected={item.quantity === '1'}>
-                        1
-                      </option>
-                      <option value="2" selected={item.quantity === '2'}>
-                        2
-                      </option>
-                      <option value="3" selected={item.quantity === '3'}>
-                        3
-                      </option>
-                      <option value="4" selected={item.quantity === '4'}>
-                        4
-                      </option>
-                      <option value="5" selected={item.quantity === '5'}>
-                        5
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="column is-2">RM {item.price}</div>
-          </div>
-        {/each}
-        <div class="columns">
-          <div class="column is-10 total-column">Total:</div>
-          <div class="column is-2">
-            RM {$cart.map(item => parseFloat(item.price) * parseFloat(item.quantity)).reduce((a, b) => a + b)}
-          </div>
-        </div>
+        <Cart />
       </section>
       <footer class="modal-card-foot">
         <button class="button is-success">Send Order</button>
