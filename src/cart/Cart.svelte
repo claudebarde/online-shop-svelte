@@ -1,5 +1,6 @@
 <script>
   import cart from "./cart-store.js";
+  import config from "../../config.js";
 </script>
 
 <style>
@@ -39,13 +40,16 @@
           </div>
         </div>
       </div>
-      <div class="column is-4">RM {item.price}</div>
+      <div class="column is-4">{config.currency} {item.price}</div>
     </div>
   {/each}
   <div class="columns is-mobile">
     <div class="column is-8 total-column">Total:</div>
     <div class="column is-4">
-      RM {$cart.map(item => parseFloat(item.price) * parseFloat(item.quantity)).reduce((a, b) => a + b)}
+      {config.currency}
+      {$cart
+        .map(item => parseFloat(item.price) * parseFloat(item.quantity))
+        .reduce((a, b) => a + b)}
     </div>
   </div>
 {:else}There are no items in your cart!{/if}

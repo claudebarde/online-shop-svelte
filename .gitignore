@@ -11,3 +11,4 @@ firestore.indexes.json
 firebaseConfig.js
 firebase.json
 .firebaserc
+.firebase

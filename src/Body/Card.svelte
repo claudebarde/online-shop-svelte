@@ -1,6 +1,8 @@
 <script>
   import cart from "../cart/cart-store.js";
   import { fade, fly } from "svelte/transition";
+  import config from "../../config.js";
+
   export let id, title, description, image, price;
 
   let isModalOpen = false;
@@ -68,8 +70,12 @@
     </figure>
   </div>
   <div class="card-content">
-    <p class="price">RM {price}</p>
-    <div class="subtitle">{title}</div>
+    <p class="price">{config.currency} {price}</p>
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-6">{title}</p>
+      </div>
+    </div>
     <div class="content">
       <div class="description">
         <p>{description}</p>

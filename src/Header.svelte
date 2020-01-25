@@ -4,9 +4,17 @@
   import { onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import config from "../config.js";
+  import { db } from "../firebaseConfig.js";
 
   let buttonHover = false;
   let isModalOpen = false;
+  let sendOrderLoading = false;
+  let sendOrderText = "Send Order";
+  let customer_name = "";
+  let customer_country = "";
+  let customer_email = "";
+  $: isSendOrderAvalaible =
+    !!customer_name && !!customer_country && !!customer_email;
 
   const toggleModal = () => {
     // opens modal
@@ -18,6 +26,43 @@
     } else {
       const html = document.getElementsByTagName("html")[0];
       html.classList.remove("is-clipped");
+    }
+  };
+
+  const sendOrder = async () => {
+    sendOrderLoading = true;
+    const order = {
+      customer_country,
+      customer_name,
+      email_address: customer_email,
+      fulfilled: false,
+      items: $cart.map(item => ({
+        item_id: item.id,
+        item_name: item.title,
+        item_price: item.price,
+        item_quantity: item.quantity
+      })),
+      timestamp: Date.now()
+    };
+
+    try {
+      const orderRef = await db.collection(config.firestoreOrders).add(order);
+      if (orderRef.id) {
+        // displays success and empties form
+        sendOrderLoading = false;
+        sendOrderText = "Order Sent!";
+        customer_name = "";
+        customer_country = "";
+        customer_email = "";
+        setTimeout(() => {
+          sendOrderText = "Send Order";
+          cart.empty();
+          isModalOpen = false;
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+      sendOrderLoading = false;
     }
   };
 </script>
@@ -45,6 +90,10 @@
 
   .logoImg {
     max-height: 3rem;
+  }
+
+  .cart-label {
+    min-width: 180px;
   }
 
   @media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -104,9 +153,68 @@
       </header>
       <section class="modal-card-body">
         <Cart />
+        <div>
+          <h1 class="title is-5">
+            Please fill up this form so I can contact you about your order:
+          </h1>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label cart-label">Your Name:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="Your name"
+                    bind:value={customer_name} />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label cart-label">Your country:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="Your country"
+                    bind:value={customer_country} />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label cart-label">Your Email Address:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    type="email"
+                    placeholder="Your email address"
+                    bind:value={customer_email} />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success">Send Order</button>
+        <button
+          class="button is-success"
+          class:is-loading={sendOrderLoading}
+          disabled={!isSendOrderAvalaible}
+          on:click={sendOrder}>
+          {sendOrderText}
+        </button>
         <button class="button is-danger" on:click={() => cart.empty()}>
           Empty Cart
         </button>
